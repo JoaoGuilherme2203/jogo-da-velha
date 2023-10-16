@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<locale.h>
+
+void mostrarTabuleiro( char tabuleiro[][3] ){
+    printf( "\n%c | %c | %c\n", tabuleiro[0][0], tabuleiro[0][1], tabuleiro[0][2] );
+    printf( "--+---+--\n" );
+    printf( "%c | %c | %c\n", tabuleiro[1][0], tabuleiro[1][1], tabuleiro[1][2] );
+    printf( "--+---+--\n" );
+    printf( "%c | %c | %c\n", tabuleiro[2][0], tabuleiro[2][1], tabuleiro[2][2] );
+}
+
+int main(){
+    setlocale( LC_ALL, "portuguese" );
+
+    char tabuleiro[3][3] = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
+    char simbolo = 'X';
+    int fim=0;
+    int linha, coluna;
+
+    while( fim == 0 ){
+        mostrarTabuleiro( tabuleiro );
+
+        do{
+            printf( "\nJogador %c, escolha a linha para jogar: ", simbolo );
+            scanf( "%d", &linha );
+            printf( "\nJogador %c, escolha a coluna para jogar: ", simbolo );
+            scanf( "%d", &coluna );
+        }while( linha < 0 || linha > 2 || coluna < 0 || coluna > 2 || tabuleiro[linha][coluna] == 'X' || tabuleiro[linha][coluna] == 'O' );
+
+        tabuleiro[linha][coluna] = simbolo;
+
+        if(( tabuleiro[0][0] == tabuleiro[0][1] && tabuleiro[0][0] == tabuleiro[0][2] && tabuleiro[0][0] != ' ' ) ||
+        ( tabuleiro[0][0] == tabuleiro[1][0] && tabuleiro[0][0] == tabuleiro[2][0] && tabuleiro[0][0] != ' ' ) ||
+        ( tabuleiro[0][0] == tabuleiro[1][1] && tabuleiro[0][0] == tabuleiro[2][2] && tabuleiro[0][0] != ' ' ) ||
+        ( tabuleiro[0][1] == tabuleiro[1][1] && tabuleiro[0][1] == tabuleiro[2][1] && tabuleiro[0][1] != ' ' ) ||
+        ( tabuleiro[0][2] == tabuleiro[1][1] && tabuleiro[0][2] == tabuleiro[2][0] && tabuleiro[0][2] != ' ' ) ||
+        ( tabuleiro[0][2] == tabuleiro[1][2] && tabuleiro[0][2] == tabuleiro[2][2] && tabuleiro[0][2] != ' ' ) ||
+        ( tabuleiro[1][0] == tabuleiro[1][1] && tabuleiro[1][0] == tabuleiro[1][2] && tabuleiro[1][0] != ' ' ) ||
+        ( tabuleiro[2][0] == tabuleiro[2][1] && tabuleiro[2][0] == tabuleiro[2][2] && tabuleiro[2][0] != ' ' )){
+            mostrarTabuleiro( tabuleiro );
+            printf( "Parabéns, jogador %c venceu\n", simbolo );
+            fim = 1;
+        }
+        else{
+            if( simbolo == 'X' ) simbolo = 'O';
+            else simbolo = 'X';
+        }
+
+    }
+
+    return 0;
+}
